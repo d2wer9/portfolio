@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портфолио</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cascadia+Code&display=swap" rel="stylesheet">
+</head>
+<body class="terminal-theme">
+    <div id="terminal">
+        <div class="top-bar">
+            <button id="theme-toggle">Сменить тему</button>
+            <button id="power-off">0 OFF</button>
+        </div>
+
+        <div id="screen" class="content">
+            <div class="left-panel">
+                <div class="avatar">
+<pre>
+                    @@@@@@                    
+                   @@    @@                   
+                   @@    @@                   
+                    @@@@@@                    
+                      @@                      
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@        
+       @@                            @@       
+     +@@@                            @@@@     
+    @@ @@    @@@@@@@      @@@@@@@    @@ @@    
+    @@ @@   @@     @@    @@     @@   @@ @@    
+    @@ @@   @@     @@    @@     @@   @@ @@    
+    @@ @@    @@@@@@@  @@  @@@@@@@    @@ @@    
+    @@ @@            @@@@            @@ @@    
+    @@ @@                            @@ @@    
+    @@ @@     @@@@@@@@@@@@@@@@@@     @@ @@    
+    @@  @     @@ @  @    @  @ @@     @@ @@    
+    @@@@@      @@@@@@@@@@@@@@@@      @@@@@    
+        @                            @       
+</pre>
+                </div>
+                <h1>Я - Никита</h1>
+                <p>Добро пожаловать!</p>
+                <nav>
+                    <button data-section="about">Обо мне</button>
+                    <button data-section="projects">Мои проекты</button>
+                    <button data-section="contacts">Контакты</button>
+                    <button id="code-btn">Код</button>
+                </nav>
+            </div>
+
+            <div class="right-panel">
+                <div id="output"><span class="cursor"></span></div>
+
+                <div id="code-input-container" style="display:none; padding:20px;">
+                    <input type="text" id="code-input" placeholder="Введите код..." maxlength="8">
+                    <button id="submit-code">Ввести</button>
+                    <p class="hint">...</p>
+                </div>
+
+                <div id="secret-content" style="display:none; padding:20px; white-space:pre-wrap;">
+                    <!-- 
+                        ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
+                        СЕКРЕТНЫЙ ТЕКСТ
+                        ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
+                    -->
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sections = {
+            about: `
+Краткая биография:
+Имя: Никита
+Город: Павлодар, Казахстан
+Университет: Павлодарский государственный университет
+Специальность: Информатика и вычислительная техника
+
+Интересы:
+Увлечен веб-разработкой, музыкой, дизайном и разработкой игр.
+
+Хобби:
+Чтение фантастики, прослушивание музыки, программирование, поиск интересных источников для вдохновения.
+
+Навыки:
+Технические навыки:
+- HTML
+- CSS
+- JavaScript
+- C++
+- C#
+
+Мягкие навыки:
+- Коммуникация
+- Работа в команде
+- Лидерство
+- Умение видеть готовый продукт и следовать за концептом
+
+Достижения:
+- Несколько готовых сайтов
+- Несколько готовых игр
+- Музыкальные композиции и участие в музыкальной группе
+            `,
+            projects: `
+Мои проекты и достижения:
+- Несколько готовых сайтов (портфолио, сайты компаний созданные в ходе обучения в университете)
+- Несколько собственных игр на Godot / Unity
+- Участие в музыкальной группе — написание и запись композиций
+Здесь будут ссылки на опубликованные проекты:
+временно отсутствуют...
+            `,
+            contacts: `
+Контакты:
+- Email: d2wer9@gmail.com
+- Telegram: @NikMudrec
+- GitHub: <a href="https://github.com/d2wer9" target="_blank">github.com/d2wer9</a>
+            `
+        };
+
+        // Секрет
+        const secretContent = `
+───▐▀▄──────▄▀▌───▄▄▄▄▄▄▄
+───▌▒▒▀▄▄▄▄▀▒▒▐▄▀▀▒██▒██▒▀▀▄
+──▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀▄
+──▌▒▒▒▒▒▒▒▒▒▒▒▒▒▄▒▒▒▒▒▒▒▒▒▒▒▒▒▀▄
+▀█▒▒█▌▒▒█▒▒▐█▒▒▀▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▌
+▀▌▒▒▒▒▒▀▒▀▒▒▒▒▒▀▀▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▐ ▄▄
+▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄█▒█
+▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▀
+──▐▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄▌
+────▀▄▄▀▀▀▀▄▄▀▀▀▀▀▀▄▄▀▀▀▀▀▀▄▄▀    `;
+        document.getElementById('secret-content').innerHTML = secretContent;
+
+        const output = document.getElementById('output');
+        const codeBtn = document.getElementById('code-btn');
+        const codeInputContainer = document.getElementById('code-input-container');
+        const codeInput = document.getElementById('code-input');
+        const submitCode = document.getElementById('submit-code');
+        const secretDiv = document.getElementById('secret-content');
+
+        let typingInterval;
+
+        // Эффект печати
+        function typeText(text) {
+            clearInterval(typingInterval);                     // стоп предыдущей анимации, если была
+            output.innerHTML = '<span class="cursor"></span>'; // очистка области и постановка курсора
+            let cleaned = text.trim().replace(/\n/g, '<br>');  // готовим текст: убираем лишние пробелы, \n -> <br>
+            let i = 0;
+            typingInterval = setInterval(() => {               // запуск таймера
+                if (i < cleaned.length) {                      // каждый раз добавляет по одному символу + курсор в конец
+                    output.innerHTML = cleaned.slice(0, ++i) + '<span class="cursor"></span>';
+                } else {
+                    clearInterval(typingInterval);             // текст закончился — стоп
+                }
+            }, 15);                                            // скорость: 15 мс между символами
+        }
+
+        // Кнопки навигации
+        document.querySelectorAll('nav button:not(#code-btn)').forEach(btn => {
+            btn.addEventListener('click', () => {
+                codeInputContainer.style.display = 'none';
+                secretDiv.style.display = 'none';
+                output.style.display = 'block';
+                const section = btn.dataset.section;
+                typeText(sections[section]);
+            });
+        });
+
+        // Кнопка "Код"
+        codeBtn.addEventListener('click', () => {
+            output.style.display = 'none';
+            secretDiv.style.display = 'none';
+            codeInputContainer.style.display = 'block';
+            codeInput.value = '';
+            codeInput.focus();
+        });
+
+        // Проверка кода
+        function checkCode() {
+            if (codeInput.value.trim() === '454743') {
+                codeInputContainer.style.display = 'none';
+                output.style.display = 'none';
+                secretDiv.style.display = 'block';
+            } else {
+                alert('Неверный код');
+                codeInput.value = '';
+                codeInput.focus();
+            }
+        }
+
+        submitCode.addEventListener('click', checkCode);
+        codeInput.addEventListener('keypress', e => {
+            if (e.key === 'Enter') checkCode();
+        });
+
+        // Смена темы
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('terminal-theme');
+            document.body.classList.toggle('sepia-theme');
+        });
+
+        // Выключение 
+        document.getElementById('power-off').addEventListener('click', () => {
+            const terminal = document.getElementById('terminal');
+            const screen = document.getElementById('screen');
+            const btn = document.getElementById('power-off');
+            if (terminal.classList.contains('powered-off')) {
+                screen.style.display = 'flex';
+                btn.textContent = '0 OFF';
+                terminal.classList.remove('powered-off');
+            } else {
+                screen.style.display = 'none';
+                btn.textContent = '1 ON';
+                terminal.classList.add('powered-off');
+            }
+        });
+
+        // Запуск — "Обо мне"
+        typeText(sections.about);
+    </script>
+</body>
+</html>
