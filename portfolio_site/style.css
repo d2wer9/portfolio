@@ -1,0 +1,281 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Cascadia Code', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Основная тема — */
+.terminal-theme {
+    background-color: #0a0a0a;
+    color: #00ff00;
+}
+
+/* Альтернативная тема — тёмно-серый + пастельно-коричневый текст */
+.sepia-theme {
+    background-color: #2c2c2c;
+    color: #d2b48c;
+}
+
+#terminal {
+    width: 90%;
+    height: 90%;
+    border: 2px solid;
+    display: flex;
+    flex-direction: column;
+}
+
+.terminal-theme #terminal {
+    border-color: #00ff00;
+    background: black;
+}
+
+.sepia-theme #terminal {
+    border-color: #5c4033;
+    background: #333333;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.top-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 15px;
+    font-family: inherit;
+    font-size: 1.1em;
+}
+
+.terminal-theme .top-bar button { color: #00ff00; }
+.sepia-theme   .top-bar button { color: #d2b48c; }
+
+.content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.left-panel {
+    width: 30%;
+    padding: 20px;
+    border-right: 1px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.terminal-theme .left-panel { border-right-color: #00ff00; }
+.sepia-theme   .left-panel { border-right-color: #5c4033; }
+
+.avatar pre {
+    margin: 0;
+    white-space: pre;
+    font-size: 0.9em;
+    line-height: 1.05;
+}
+
+h1 {
+    margin: 10px 0 5px;
+    font-size: 2.4em;
+}
+
+.left-panel p {
+    margin: 8px 0 20px;
+    font-size: 1.25em;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+nav button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    padding: 12px 0;
+    font-family: inherit;
+    font-size: 1.6em;
+    transition: all 0.15s;
+}
+
+.terminal-theme nav button {
+    color: #00ff00;
+}
+
+.sepia-theme nav button {
+    color: #d2b48c;
+}
+
+/* ────────────────────────────────────────────── */
+/* hover по темам отдельно */
+/* ────────────────────────────────────────────── */
+
+.terminal-theme nav button:hover {
+    background: rgba(0, 255, 0, 0.15);     /* зелёный фон при наведении */
+    color: #00ff41;                        /* ярче текст */
+    text-decoration: underline;
+}
+
+.sepia-theme nav button:hover {
+    background: rgba(210, 180, 140, 0.18); /* тёплый бежевый/коричневатый */
+    color: #e0c9a6;                        /* светлее текст */
+    text-decoration: underline;
+}
+
+/* ────────────────────────────────────────────── */
+
+.right-panel {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#output {
+    min-height: 100%;
+    line-height: 1.45;
+}
+
+.cursor {
+    display: inline-block;
+    width: 0.6em;
+    animation: blink 0.9s step-end infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #00aa00;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #00ff41;
+}
+
+.sepia-theme ::-webkit-scrollbar-track {
+    background: #222;
+}
+
+.sepia-theme ::-webkit-scrollbar-thumb {
+    background: #8b6f47;
+}
+
+.sepia-theme ::-webkit-scrollbar-thumb:hover {
+    background: #a68a64;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #00aa00 #111;
+}
+
+.sepia-theme * {
+    scrollbar-color: #8b6f47 #222;
+}
+
+/* Поле ввода кода */
+#code-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+}
+
+#code-input {
+    padding: 10px;
+    font-family: 'Cascadia Code', monospace;
+    font-size: 1.1em;
+    background: #111;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    border-radius: 4px;
+}
+
+.sepia-theme #code-input {
+    background: #222;
+    color: #d2b48c;
+    border-color: #8b6f47;
+}
+
+#submit-code {
+    padding: 10px;
+    font-family: inherit;
+    font-size: 1.1em;
+    background: none;
+    border: 1px solid;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.terminal-theme #submit-code {
+    color: #00ff00;
+    border-color: #00ff00;
+}
+
+.sepia-theme #submit-code {
+    color: #d2b48c;
+    border-color: #8b6f47;
+}
+
+#submit-code:hover {
+    background: rgba(0,255,0,0.15);
+}
+
+.sepia-theme #submit-code:hover {
+    background: rgba(210,180,140,0.15);
+}
+
+.hint {
+    font-size: 0.9em;
+    opacity: 0.7;
+}
+
+.powered-off {
+    background: black !important;
+}
+
+.sepia-theme .powered-off {
+    background: #2c2c2c !important;
+}
+
+/* Стили для ссылок в правой панели */
+#output a {
+    color: #00ff41;                    /* яркий зелёный в тёмной теме */
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.sepia-theme #output a {
+    color: #e0c9a6;                    /* тёплый цвет для сепии */
+}
+
+#output a:hover {
+    color: #ffffff;                    /* белый при наведении */
+    text-decoration: none;             /* или underline */
+}
